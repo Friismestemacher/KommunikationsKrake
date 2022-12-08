@@ -1073,18 +1073,42 @@ this is the main intent switch function. All intents that use the backend must b
                  'Oder ich berate dich, welche Veranstaltung dir gefallen wird.\r\n',
             chips=[  # 'Video: Ällei und KI',
                 # 'Video: Ällei und KI in Leichter Sprache',
+                'Ich habe eine Frage'
                 'Veranstaltungsberatung',
                 'Mehr über Sommerblut erfahren',
-                'Team von Ällei kontaktieren',
-                'Kontaktmöglichkeiten zum Sommerblut-Team',
-                'Ich habe eine Frage'],
+                'Mehr über Ällei erfahren',
+                'Kontaktmöglichkeiten zum Sommerblut-Team'],
             context='events_found',
             variable_name='events_found',
             variable=events,
             lifespan=50,
             session_id=session_id,
             dgs_videos_bot=make_video_array(['A2']),
-            dgs_videos_chips=make_video_array(['RC5a', 'RC5b', 'RC6', 'RC7', 'Feedback1']))
+            dgs_videos_chips=make_video_array(['RC3', 'RC6', 'RC7', 'E1', 'E1']))
+   
+    elif intent_name == 'script.about_bot':
+
+        _, events, titles, ids = get_full_event_list(page=1, entries=50)
+
+        return chip_w_context_response(
+            text='Sehr gerne. \r\n' 
+                 'Ich habe einen eigenen Blog, in dem ihr viel über mich lesen könnt!\r\n'
+            chips=['Blog in einem neuen Fenster öffnen'
+                'Erzähl mir einen Witz',
+                'Team von Ällei kontaktieren',
+                'Mehr über das Sommerblut erfahren'],
+            context='events_found',
+            variable_name='events_found',
+            variable=events,
+            lifespan=50,
+            session_id=session_id,
+            dgs_videos_bot=make_video_array(['A2']),
+            dgs_videos_chips=make_video_array(['E1', 'E1', 'Feedback1', 'RC7']))
+    
+    elif intent_name == 'script.about_bot - linkout':
+        url = 'https://www.sommerblut.de/de/logbuch1'
+        button_text = 'Link zum Blog von Ällei'
+        return button_response(url=url, button_text=button_text, chips=['Zurück: Hauptmenü'])
 
     elif intent_name == 'script.bot_theme_input':
         ls_video = parameters.get('ls_video')
